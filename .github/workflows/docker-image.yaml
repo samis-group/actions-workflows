@@ -1,4 +1,4 @@
-# .github/workflows/_docker-image.yaml
+---
 name: Build and publish Docker Image
 
 on:
@@ -31,8 +31,8 @@ on:
 
 jobs:
   build:
-    runs-on: ["arc-runner-set-actions-runner-base"]
     name: Build & Push Docker Image - ${{ inputs.image_name }}
+    runs-on: ["arc-runner-set-actions-runner-base"]
     permissions:
       contents: read
       packages: write
