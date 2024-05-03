@@ -32,7 +32,8 @@ on:
 jobs:
   build:
     name: Build & Push Docker Image - ${{ inputs.image_name }}
-    runs-on: ["arc-runner-set-ubuntu-base"]
+    # runs-on: ["arc-runner-set-ubuntu-base"]
+    runs-on: ["arc-runner-set-actions-runner-base"]
     permissions:
       contents: read
       packages: write
