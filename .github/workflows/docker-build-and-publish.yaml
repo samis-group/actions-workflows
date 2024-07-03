@@ -98,8 +98,8 @@ jobs:
           file: ${{ inputs.docker_dir }}/${{ inputs.image_name }}/Dockerfile
           tags: ${{ steps.metadata-ghcr.outputs.tags }}
           labels: ${{ steps.metadata-ghcr.outputs.labels }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          # cache-from: type=gha
+          # cache-to: type=gha,mode=max
           platforms: ${{ inputs.platforms }}
           push: true
 
@@ -114,8 +114,8 @@ jobs:
           file: ${{ inputs.docker_dir }}/${{ inputs.image_name }}/Dockerfile
           tags: ${{ steps.metadata-ghcr.outputs.tags }}
           labels: ${{ steps.metadata-ghcr.outputs.labels }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          # cache-from: type=gha
+          # cache-to: type=gha,mode=max
           platforms: ${{ inputs.platforms }}
           push: true
           target: ${{ inputs.build_target }}
