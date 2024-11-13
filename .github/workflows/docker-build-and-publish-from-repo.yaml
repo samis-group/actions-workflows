@@ -1,16 +1,16 @@
 ---
-name: Build and publish Docker Image
+name: Build and publish Mkdocs Docker Image
 
 on:
   workflow_call:
     inputs:
       image_name:
-        description: 'The image name to use when building - Try and make it match the name in the `docker` folder'
+        description: 'The image name to use when building'
         required: true
         type: string
       repo_url:
         description: 'The repo url to use when building'
-        required: false
+        required: true
         type: string
       registry:
         description: 'The registry to use for hosting the images'
