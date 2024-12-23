@@ -13,10 +13,15 @@ on:
         required: false
         default: 'ghcr.io'
         type: string
-      docker_dir:
+      dockerfile:
         description: 'The folder where the image is built from'
         required: false
-        default: 'docker'
+        default: './Dockerfile'
+        type: string
+      context_dir:
+        description: 'The folder where the image is built from'
+        required: false
+        default: '.'
         type: string
       platforms:
         description: 'The architecture to build the image for'
@@ -91,10 +96,10 @@ jobs:
         uses: docker/build-push-action@v5
         if: ${{ inputs.build_target == '' }}
         with:
-          context: ${{ inputs.docker_dir }}/${{ inputs.image_name }}
-          build-contexts: |
-            project=./
-          file: ${{ inputs.docker_dir }}/${{ inputs.image_name }}/Dockerfile
+          context: ${{ inputs.context_dir }}
+          # build-contexts: |
+          #   project=./
+          file: ${{ inputs.dockerfile }}
           tags: ${{ steps.metadata-ghcr.outputs.tags }}
           labels: ${{ steps.metadata-ghcr.outputs.labels }}
           # cache-from: type=gha
@@ -107,10 +112,10 @@ jobs:
         uses: docker/build-push-action@v5
         if: ${{ inputs.build_target != '' }}
         with:
-          context: ${{ inputs.docker_dir }}/${{ inputs.image_name }}
-          build-contexts: |
-            project=./
-          file: ${{ inputs.docker_dir }}/${{ inputs.image_name }}/Dockerfile
+          context: ${{ inputs.context_dir }}
+          # build-contexts: |
+          #   project=./
+          file: ${{ inputs.dockerfile }}
           tags: ${{ steps.metadata-ghcr.outputs.tags }}
           labels: ${{ steps.metadata-ghcr.outputs.labels }}
           # cache-from: type=gha
