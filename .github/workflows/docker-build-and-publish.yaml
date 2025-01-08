@@ -36,7 +36,8 @@ on:
       run_on_runners:
         description: 'The Runners that build the image'
         required: false
-        default: 'self-hosted'
+        default: 'arc-runner-set-actions-runner-base'
+        # default: 'self-hosted'
         type: string
 
 jobs:
