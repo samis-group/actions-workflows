@@ -107,8 +107,6 @@ jobs:
         with:
           context: ${{ inputs.context_dir }}
           build-contexts: ${{ inputs.build_contexts }}
-          # build-contexts: |
-          #   project=./
           file: ${{ inputs.dockerfile }}
           tags: ${{ steps.metadata-ghcr.outputs.tags }}
           labels: ${{ steps.metadata-ghcr.outputs.labels }}
@@ -124,8 +122,6 @@ jobs:
         with:
           context: ${{ inputs.context_dir }}
           build-contexts: ${{ inputs.build_contexts }}
-          # build-contexts: |
-          #   project=./
           file: ${{ inputs.dockerfile }}
           tags: ${{ steps.metadata-ghcr.outputs.tags }}
           labels: ${{ steps.metadata-ghcr.outputs.labels }}

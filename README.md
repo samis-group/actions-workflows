@@ -22,6 +22,8 @@ This is where I store all of my reusable github actions workflows.
 
 ### Example
 
+Mkdocs base:
+
 ```yaml
 name: Docker Image - mkdocs-base
 
@@ -42,4 +44,36 @@ jobs:
     uses: samis-group/actions-workflows/.github/workflows/docker-build-and-publish.yaml@main
     with:
       image_name: mkdocs-base
+```
+
+An example with multiple named contexts:
+
+```yaml
+name: Docker Image - Workstation
+
+on:
+  push:
+    paths:
+      - 'docker/workstation/**'
+      - 'provision/ansible/requirements.yml'
+      - 'provision/ansible/roles/requirements.yml'
+      - 'requirements.txt'
+    branches:
+      - 'main'
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - 'main'
+
+jobs:
+  build:
+    uses: samis-group/actions-workflows/.github/workflows/docker-build-and-publish.yaml@main
+    with:
+      image_name: workstation
+      platforms: 'linux/amd64,linux/arm64'
+      dockerfile: docker/workstation/Dockerfile
+      # run_on_runners: "ubuntu-latest" # Use public runner for public project if you would like
+      build_contexts: |
+        project=./
+        dockerdir=docker/workstation
 ```
