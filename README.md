@@ -15,6 +15,7 @@ This is where I store all of my reusable github actions workflows.
 - **registry**: The registry to use for hosting the images (default: 'ghcr.io')
 - **dockerfile**: The folder where the image is built from (default: './Dockerfile')
 - **context_dir**: The folder where the image is built from (default: '.')
+- **build_contexts**: The named build contexts to use (default: '')
 - **platforms**: The architecture to build the image for (default: 'linux/amd64')
 - **build_target**: The target at which to build the image (default: '')
 - **run_on_runners**: The Runners that build and publish the image (default: 'self-hosted')
