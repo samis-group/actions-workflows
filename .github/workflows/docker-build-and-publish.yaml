@@ -23,6 +23,11 @@ on:
         required: false
         default: '.'
         type: string
+      build_contexts:
+        description: 'The named build contexts to use'
+        required: false
+        default: ''
+        type: string
       platforms:
         description: 'The architecture to build the image for'
         required: false
@@ -101,6 +106,7 @@ jobs:
         if: ${{ inputs.build_target == '' }}
         with:
           context: ${{ inputs.context_dir }}
+          build-contexts: ${{ inputs.build_contexts }}
           # build-contexts: |
           #   project=./
           file: ${{ inputs.dockerfile }}
@@ -117,6 +123,7 @@ jobs:
         if: ${{ inputs.build_target != '' }}
         with:
           context: ${{ inputs.context_dir }}
+          build-contexts: ${{ inputs.build_contexts }}
           # build-contexts: |
           #   project=./
           file: ${{ inputs.dockerfile }}
