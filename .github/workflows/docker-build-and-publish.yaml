@@ -5,7 +5,7 @@ on:
   workflow_call:
     inputs:
       image_name:
-        description: 'The image name to use when building - Try and make it match the name in the `docker` folder'
+        description: 'The image name to use when building'
         required: true
         type: string
       registry:
@@ -43,15 +43,13 @@ jobs:
   build:
     name: Build & Push Docker Image - ${{ inputs.image_name }}
     runs-on: ["${{ inputs.run_on_runners }}"]
-    # runs-on: ["arc-runner-set-actions-runner-base"]
-    # runs-on: ["arc-runner-set-ubuntu-base"]
     permissions:
       contents: read
       packages: write
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v4
 
       # # Install the cosign tool except on PR: https://github.com/sigstore/cosign-installer
       # - name: Install cosign
@@ -62,7 +60,7 @@ jobs:
 
       # Workaround: https://github.com/docker/build-push-action/issues/461
       - name: Setup Docker buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v3
         # with:
         #   buildkitd-flags: --debug
 
@@ -99,7 +97,7 @@ jobs:
 
       - name: Build and push Docker image to ${{ inputs.registry }}
         id: build-and-push-image
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         if: ${{ inputs.build_target == '' }}
         with:
           context: ${{ inputs.context_dir }}
@@ -115,7 +113,7 @@ jobs:
 
       - name: Build and push Docker image to ${{ inputs.registry }} at defined target - ${{ inputs.build_target }}
         id: build-and-push-image-with-target
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         if: ${{ inputs.build_target != '' }}
         with:
           context: ${{ inputs.context_dir }}
