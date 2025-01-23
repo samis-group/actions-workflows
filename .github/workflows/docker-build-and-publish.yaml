@@ -66,13 +66,13 @@ jobs:
           echo "Repo Name: ${{ inputs.repo_name }}"
 
       - name: Is input defined as no string?
-        if: ${{ inputs.repo_name != '' }}
+        if: ${{ inputs.repo_name == '' }}
         shell: bash
         run: |
           echo "Repo Name is no string ''."
 
       - name: Is input defined as null?
-        if: ${{ inputs.repo_name != null }}
+        if: ${{ inputs.repo_name == null }}
         shell: bash
         run: |
           echo "Repo Name is null."
