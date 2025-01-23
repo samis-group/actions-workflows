@@ -8,6 +8,10 @@ on:
         description: 'The image name to use when building'
         required: true
         type: string
+      repo_url:
+        description: 'The repo url to use when building'
+        required: true
+        type: string
       registry:
         description: 'The registry to use for hosting the images'
         required: false
@@ -53,7 +57,34 @@ jobs:
       packages: write
 
     steps:
-      - name: Checkout
+      # - name: Checkout
+      #   uses: actions/checkout@v4
+
+      - name: Debug repository name from inputs
+        shell: bash
+        run: |
+          echo "Repo Name: ${{ inputs.repo_name }}"
+
+      - name: Is input defined as no string?
+        if: ${{ inputs.repo_name != '' }}
+        shell: bash
+        run: |
+          echo "Repo Name is no string ''."
+
+      - name: Is input defined as null?
+        if: ${{ inputs.repo_name != null }}
+        shell: bash
+        run: |
+          echo "Repo Name is null."
+
+      - name: Checkout Repo URL defined in inputs
+        if: ${{ inputs.repo_name != '' && inputs.repo_name != null }}
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ inputs.repo_name }}
+
+      - name: Checkout Default Repository
+        if: ${{ inputs.repo_name == '' || inputs.repo_name == null }}
         uses: actions/checkout@v4
 
       # # Install the cosign tool except on PR: https://github.com/sigstore/cosign-installer
