@@ -15,10 +15,6 @@ on:
         description: 'The mkdocs repo to use when building'
         required: true
         type: string
-      # gh_clone_pat:
-      #   description: 'The GitHub Personal Access Token to use when cloning the mkdocs repo'
-      #   required: true
-      #   type: string
       registry:
         description: 'The registry to use for hosting the images'
         required: false
@@ -68,14 +64,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: debug
-        shell: bash
-        run: |
-          echo "secret - ${{ secrets.gh_clone_pat }}"
-          echo "var - $GH_CLONE_PAT"
-        # echo '${{ toJson(github) }}'
-        # echo "repo is: ${{ github.repository }}"
 
       - name: Checkout mkdocs repo
         uses: actions/checkout@v4
