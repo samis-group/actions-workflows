@@ -63,8 +63,8 @@ jobs:
       - name: debug
         shell: bash
         run: |
-          echo "${{ secrets.GH_CLONE_PAT }}"
-          echo "$GH_CLONE_PAT"
+          echo "secret - ${{ secrets.GH_CLONE_PAT }}"
+          echo "var - $GH_CLONE_PAT"
         # echo '${{ toJson(github) }}'
         # echo "repo is: ${{ github.repository }}"
 
