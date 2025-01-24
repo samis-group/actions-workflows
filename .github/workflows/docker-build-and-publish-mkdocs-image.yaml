@@ -60,12 +60,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # - name: debug github object
-      #   shell: bash
-      #   run: |
-      #     echo "Github Context:"
-      #     echo '${{ toJson(github) }}'
-      #     echo "repo is: ${{ github.repository }}"
+      - name: debug
+        shell: bash
+        run: |
+          echo "${{ secrets.GH_CLONE_PAT }}"
+          echo "$GH_CLONE_PAT"
+          # echo '${{ toJson(github) }}'
+          # echo "repo is: ${{ github.repository }}"
 
       - name: Checkout mkdocs repo
         uses: actions/checkout@v4
