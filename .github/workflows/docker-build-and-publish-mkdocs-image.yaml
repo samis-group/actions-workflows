@@ -1,5 +1,5 @@
 ---
-name: Build and publish Docker Image
+name: Build and publish Docker Image for mkdocs files
 
 on:
   workflow_call:
@@ -8,8 +8,8 @@ on:
         description: 'The image name to use when building'
         required: true
         type: string
-      additional_repo_urls:
-        description: 'The additional repos to use when building. They will be placed in the same directory as the default repo'
+      mkdocs_repo:
+        description: 'The mkdocs repo to use when building'
         required: true
         type: string
       registry:
@@ -60,35 +60,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Debug repository name from inputs
+      - name: debug github object
         shell: bash
         run: |
-          echo "Repo Name: ${{ inputs.repo_name }}"
+          echo "Github Context:"
+          echo '${{ toJson(github) }}'
+          echo "repo is: ${{ github.repository }}"
 
-      - name: Is input defined as no string?
-        if: ${{ inputs.repo_name == '' }}
-        shell: bash
-        run: |
-          echo "Repo Name is no string ''."
-
-      - name: Is input defined as null?
-        if: ${{ inputs.repo_name == null }}
-        shell: bash
-        run: |
-          echo "Repo Name is null."
-
-      - name: Checkout Repo URLs defined in inputs
-        if: ${{ inputs.repo_name != '' && inputs.repo_name != null }}
+      - name: Checkout mkdocs repo
         uses: actions/checkout@v4
         with:
-          repository: ${{ inputs.repo_name }}
-
-      # # Install the cosign tool except on PR: https://github.com/sigstore/cosign-installer
-      # - name: Install cosign
-      #   if: github.event_name != 'pull_request'
-      #   uses: sigstore/cosign-installer@f3c664df7af409cb4873aa5068053ba9d61a57b6 #v2.6.0
-      #   with:
-      #     cosign-release: 'v1.11.0'
+          repository: ${{ inputs.mkdocs_repo }}
+          path: mkdocs-repo
 
       # Workaround: https://github.com/docker/build-push-action/issues/461
       - name: Setup Docker buildx
@@ -157,15 +140,3 @@ jobs:
           platforms: ${{ inputs.platforms }}
           push: true
           target: ${{ inputs.build_target }}
-
-      # - name: Sign the image with cosign
-      #   if: github.event_name != 'pull_request'
-      #   run: |
-      #     cosign sign --key cosign.key ${{ inputs.registry }}/${{ inputs.image_name }}
-
-      - name: Create release when one of these tags are committed - alpha | beta | rc
-        uses: josephrodriguez/swift-release@v1.1
-        if: ${{ startsWith(github.ref, 'refs/tags/') }}
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          prerelease: ${{ contains(github.ref, 'alpha') || contains(github.ref, 'beta') || contains(github.ref, 'rc') }}
