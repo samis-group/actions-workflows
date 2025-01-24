@@ -8,10 +8,6 @@ on:
         description: 'The image name to use when building'
         required: true
         type: string
-      additional_repo_urls:
-        description: 'The additional repos to use when building. They will be placed in the same directory as the default repo'
-        required: true
-        type: string
       registry:
         description: 'The registry to use for hosting the images'
         required: false
